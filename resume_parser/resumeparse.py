@@ -703,7 +703,7 @@ class resumeparse(object):
 
 parser_obj = resumeparse()
 # parsed_data = parser_obj.read_file('C:/Users/Administrator/Desktop/resume_parser-master v2.1/resume_parser/Ashok_resume.pdf')
-parsed_data = parser_obj.read_file('resume_parser\Ashok_resume.pdf')
+parsed_resume_data = parser_obj.read_file('resume_parser\Ashok_resume.pdf')
 # parser_obj.display()
 
-print("\n\n ========== parsed_data ========= \n\n", parsed_data)
+print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
