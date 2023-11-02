@@ -674,7 +674,7 @@ class resumeparse(object):
 
         degree = resumeparse.get_degree(full_text)
         company_working = resumeparse.get_company_working(full_text)
-        
+        experience_dict=resumeparse.get_work_and_employment(full_text)
         skills = ""
 
         if len(resume_segments['skills'].keys()):
