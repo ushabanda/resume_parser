@@ -61,7 +61,7 @@ designation = [line.strip().lower() for line in file]
 designitionmatcher = PhraseMatcher(nlp.vocab)
 patterns = [nlp.make_doc(text) for text in designation if len(nlp.make_doc(text)) < 10]
 designitionmatcher.add("Job title", None, *patterns)
-
+                        
 # The below 6 line code is to extract skills
 file = os.path.join(base_path,"LINKEDIN_SKILLS_ORIGINAL.txt") 
 file = open(file, "r", encoding='utf-8')    
