@@ -72,7 +72,36 @@ skillsmatcher.add("Job title", None, *patterns)
 
 
 class resumeparse(object):
+    def extract_projects(text):
+        """
+        Extract project details from the given text.
+        You may need to adapt this function based on how project details are presented in your resume.
 
+        Parameters:
+        - text (str): The text containing information about projects.
+
+        Returns:
+        - List of project details.
+        """
+        projects = []
+        project_starts = re.finditer(r'Project[^\w\n]*(\w[^\n]*)', text, re.IGNORECASE)
+        
+        for start_match in project_starts:
+            project_start = start_match.group(1)
+            project_end_match = re.search(r'(?:(?:Project|Objective|Work and Employment|Education and Training|Skills|Accomplishments|Misc):|$)', project_start, re.IGNORECASE)
+            
+            if project_end_match:
+                project_end_index = project_end_match.start()
+                project_details = project_start[:project_end_index].strip()
+                projects.append(project_details)
+
+        return projects
+        # projects = []
+        # project_matches = re.finditer(r'Project:(.*?)(?=(Objective:|Work and Employment:|Education and Training:|Skills:|Accomplishments:|Misc:|$))', text, re.DOTALL)
+        # for match in project_matches:
+        #     project_details = match.group(1).strip()
+        #     projects.append(project_details)
+        # return projects
     objective = (
         'career goal',
         'objective',
@@ -195,6 +224,7 @@ class resumeparse(object):
         'thesis',
         'theses',
     )
+       
 
            
     def convert_docx_to_txt(docx_file,docx_parser):
@@ -674,7 +704,7 @@ class resumeparse(object):
 
         degree = resumeparse.get_degree(full_text)
         company_working = resumeparse.get_company_working(full_text)
-        experience_dict=resumeparse.get_work_and_employment(full_text)
+     
         skills = ""
 
         if len(resume_segments['skills'].keys()):
@@ -685,7 +715,12 @@ class resumeparse(object):
         if len(skills) == 0:
             skills = resumeparse.extract_skills(full_text)
         skills = list(dict.fromkeys(skills).keys())
-        
+         
+        project_details = resumeparse.extract_projects(full_text)
+         
+         
+         
+         
         return {
             "email": email,
             "phone": phone,
@@ -695,15 +730,21 @@ class resumeparse(object):
             "designition": designition,
             "degree": degree,
             "skills": skills,
-            "Companies worked at": company_working
+            "Companies worked at": company_working,
+            "Projects": project_details
         }
-
+    
     def display(self):
         print("\n\n ========= Inside display() ========== \n\n")
-
+        
+        
 parser_obj = resumeparse()
-# parsed_data = parser_obj.read_file('C:/Users/Administrator/Desktop/resume_parser-master v2.1/resume_parser/Ashok_resume.pdf')
-parsed_resume_data = parser_obj.read_file('resume_parser\Ashok_resume.pdf')
-# parser_obj.display()
-
+parsed_resume_data = parser_obj.read_file('sample/Naukri_AbhijeetDey[8y_0m].doc')
 print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
+
+# parser_obj = resumeparse()
+# # parsed_data = parser_obj.read_file('C:/Users/Administrator/Desktop/resume_parser-master v2.1/resume_parser/Ashok_resume.pdf')
+# parsed_resume_data = parser_obj.read_file('Kumar_Resume.pdf')
+# # parser_obj.display()
+
+# print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
