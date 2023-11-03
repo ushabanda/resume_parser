@@ -96,12 +96,7 @@ class resumeparse(object):
                 projects.append(project_details)
 
         return projects
-        # projects = []
-        # project_matches = re.finditer(r'Project:(.*?)(?=(Objective:|Work and Employment:|Education and Training:|Skills:|Accomplishments:|Misc:|$))', text, re.DOTALL)
-        # for match in project_matches:
-        #     project_details = match.group(1).strip()
-        #     projects.append(project_details)
-        # return projects
+       
     objective = (
         'career goal',
         'objective',
@@ -730,7 +725,7 @@ class resumeparse(object):
             "designition": designition,
             "degree": degree,
             "skills": skills,
-            "Companies worked at": company_working,
+            "Companiesworkedat": company_working,
             "Projects": project_details
         }
     

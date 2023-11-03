@@ -1,0 +1,58 @@
+#email{
+  border: 1px solid black;
+}
+#phone{
+  border: 1px solid black;
+}
+#name{
+  border: 1px solid black;
+}
+#exp{
+  border: 1px solid black;
+}
+#uni{
+  border: 1px solid black;
+}
+#des{
+  border: 1px solid black;
+}
+#ski{
+  border: 1px solid black;
+}
+#com{
+  border: 1px solid black;
+}
+#pro{
+  border: 1px solid black;
+}
+
+
+/* App.css */
+
+/* Style for the form container */
+form {
+  margin-bottom: 20px;
+}
+
+/* Style for the parsed data container */
+div {
+  margin-top: 20px;
+}
+
+/* Style for the labels */
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Style for the textarea */
+textarea {
+  width: 90%;
+}
+
+/* Style for the error message */
+div[style="color: red;"] {
+  margin-top: 10px;
+}
+
+
