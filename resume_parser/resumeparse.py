@@ -707,3 +707,4 @@ parsed_data = parser_obj.read_file('resume_parser\Ashok_resume.pdf')
 # parser_obj.display()
 
 print("\n\n ========== parsed_data ========= \n\n", parsed_data)
+# sai prasad swain
