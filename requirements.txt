@@ -83,4 +83,4 @@ widgetsnbextension
 zipp
 numpy
 pandas
-spacy==2.3.3
+spacy==2.3.2
