@@ -742,4 +742,9 @@ print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
 # parsed_resume_data = parser_obj.read_file('Kumar_Resume.pdf')
 # # parser_obj.display()
 
+
+#print("\n\n ========== parsed_data ========= \n\n", parsed_data)
+# sai prasad swain
+
 # print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
+
