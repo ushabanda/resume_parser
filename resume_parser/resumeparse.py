@@ -743,8 +743,8 @@ print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
 # # parser_obj.display()
 
 
-print("\n\n ========== parsed_data ========= \n\n", parsed_data)
+#print("\n\n ========== parsed_data ========= \n\n", parsed_data)
 # sai prasad swain
-=======
+
 # print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
 
