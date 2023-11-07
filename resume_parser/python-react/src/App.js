@@ -63,8 +63,12 @@ const App = () => {
                         <textarea id='phone' value={parsedData.phone} readOnly />
                     </div>
                     <div>
-                        <label>Name:</label>
-                        <textarea id='name' value={parsedData.name} readOnly />
+                        <label>First name:</label>
+                        <textarea id='name' value={parsedData.first_name} readOnly />
+                    </div>
+                    <div>
+                        <label>last name:</label>
+                        <textarea id='name' value={parsedData.last_name} readOnly />
                     </div>
                     <div>
                         <label>Total Experience:</label>

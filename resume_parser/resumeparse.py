@@ -600,11 +600,17 @@ class resumeparse(object):
         matcher.add('NAME', None, pattern)
 
         matches = matcher(nlp_text)
-
+        first_name = ""
+        last_name = ""
         for match_id, start, end in matches:
             span = nlp_text[start:end]
-            return span.text
-        return ""
+            if not first_name:
+                first_name = span.text
+            else:
+                  last_name = span.text    
+        if ' ' in first_name:
+                first_name, last_name = first_name.split(' ', 1)
+        return first_name, last_name
 
     def extract_university(text, file):
         df = pd.read_csv(file, header=None)
@@ -719,7 +725,8 @@ class resumeparse(object):
         return {
             "email": email,
             "phone": phone,
-            "name": name,
+            "first_name": name[0],
+            "last_name": name[1],
             "total_exp": total_exp,
             "university": university,
             "designition": designition,
@@ -743,11 +750,11 @@ print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
 # # parser_obj.display()
 
 
-<<<<<<< HEAD
+
 # print("\n\n ========== parsed_data ========= \n\n", parsed_data)
-=======
+
 #print("\n\n ========== parsed_data ========= \n\n", parsed_data)
->>>>>>> main
+
 # sai prasad swain
 
 # print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
