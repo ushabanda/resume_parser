@@ -23,7 +23,7 @@ import nltk
 import re
 import os
 from datetime import date
-
+import pyap
 import nltk
 import docx2txt
 import pandas as pd
@@ -219,6 +219,12 @@ class resumeparse(object):
         'thesis',
         'theses',
     )
+    
+ 
+    # address=(
+        
+         
+    # )
        
 
            
@@ -400,7 +406,9 @@ class resumeparse(object):
             'education_and_training': {},
             'skills': {},
             'accomplishments': {},
-            'misc': {}
+            'misc': {},
+            # 'address': {},
+            
         }
 
         resume_indices = []
@@ -660,6 +668,22 @@ class resumeparse(object):
             skills.append(span.text)
         skills = list(set(skills))
         return skills
+    
+    # def extract_address(resume_text):
+   
+        # lines = text.split('\n')
+        # address_keywords = ["address"]
+        # addresses = []
+
+        # for line in lines:
+        #     for keyword in address_keywords:
+        #         if keyword in line.lower():
+        #             addresses.append(line)
+        #  addresses = pyap.parse(resume_text, country='US')  # Set the appropriate country code
+
+    # Extract the addresses from the parsed results
+        #  extracted_addresses = [address.full_address() for address in addresses]
+        #  return extracted_addresses
 
 
     def read_file(self, file,docx_parser = "tika"):
@@ -699,6 +723,9 @@ class resumeparse(object):
 
         degree = resumeparse.get_degree(full_text)
         company_working = resumeparse.get_company_working(full_text)
+        
+        # address = resumeparse.extract_address_from_resume(full_text)
+        # address = resumeparse. extract_address(resume_text)
      
         skills = ""
 
@@ -726,7 +753,9 @@ class resumeparse(object):
             "degree": degree,
             "skills": skills,
             "Companiesworkedat": company_working,
-            "Projects": project_details
+            "Projects": project_details,
+            # "address": address
+            
         }
     
     def display(self):
