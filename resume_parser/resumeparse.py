@@ -770,7 +770,7 @@ class resumeparse(object):
             "skills": skills,
             "Companiesworkedat": company_working,
             "Projects": project_details,
-            "locations": location,
+            "location": location,
             "address_components": address_components
         }
     
