@@ -37,6 +37,7 @@ import spacy
 from spacy.matcher import Matcher
 from spacy.matcher import PhraseMatcher
 
+
 import sys
 import operator
 import string
@@ -48,6 +49,7 @@ base_path = os.path.dirname(__file__)
 
 
 nlp = spacy.load('en_core_web_sm')
+
 custom_nlp2 = spacy.load(os.path.join(base_path,"degree","model"))
 custom_nlp3 = spacy.load(os.path.join(base_path,"company_working","model"))
 
@@ -666,8 +668,42 @@ class resumeparse(object):
             skills.append(span.text)
         skills = list(set(skills))
         return skills
+    def extract_location(text):
+        nlp = spacy.load("en_core_web_sm")
+        doc = nlp(text)
 
+        locations = []
+        for ent in doc.ents:
+            if ent.label_ in ["GPE", "LOC"]:
+                locations.append(ent.text)
 
+        formatted_location = ', '.join(locations)  # Format as "village, city"
+    
+        if formatted_location.strip():
+            return formatted_location.strip()
+        else:
+            return None
+    
+    
+    def extract_address(text):
+        nlp = spacy.load("en_core_web_sm")
+        doc = nlp(text)
+
+        address_components = []
+        for ent in doc.ents:
+            if ent.label_ in ["GPE", "LOC"]:
+                if ent.root.dep_ not in ['prep', 'pobj']:  # Exclude prepositions and objects
+                    address_components.append(ent.text)
+
+        formatted_address = ', '.join(address_components)  # Format as "village, city"
+
+        if formatted_address.strip():
+            return formatted_address.strip()
+        else:
+            return None
+   
+    
+    
     def read_file(self, file,docx_parser = "tika"):
         """
         file : Give path of resume file
@@ -705,7 +741,7 @@ class resumeparse(object):
 
         degree = resumeparse.get_degree(full_text)
         company_working = resumeparse.get_company_working(full_text)
-     
+       
         skills = ""
 
         if len(resume_segments['skills'].keys()):
@@ -718,8 +754,8 @@ class resumeparse(object):
         skills = list(dict.fromkeys(skills).keys())
          
         project_details = resumeparse.extract_projects(full_text)
-         
-         
+        location =  resumeparse.extract_location(full_text)
+        address_components = resumeparse.extract_address(full_text)
          
          
         return {
@@ -733,7 +769,9 @@ class resumeparse(object):
             "degree": degree,
             "skills": skills,
             "Companiesworkedat": company_working,
-            "Projects": project_details
+            "Projects": project_details,
+            "locations": location,
+            "address_components": address_components
         }
     
     def display(self):
@@ -744,18 +782,4 @@ parser_obj = resumeparse()
 parsed_resume_data = parser_obj.read_file('sample/Naukri_AbhijeetDey[8y_0m].doc')
 print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
 
-# parser_obj = resumeparse()
-# # parsed_data = parser_obj.read_file('C:/Users/Administrator/Desktop/resume_parser-master v2.1/resume_parser/Ashok_resume.pdf')
-# parsed_resume_data = parser_obj.read_file('Kumar_Resume.pdf')
-# # parser_obj.display()
-
-
-
-# print("\n\n ========== parsed_data ========= \n\n", parsed_data)
-
-#print("\n\n ========== parsed_data ========= \n\n", parsed_data)
-
-# sai prasad swain
-
-# print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
 
