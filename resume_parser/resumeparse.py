@@ -23,7 +23,7 @@ import nltk
 import re
 import os
 from datetime import date
-
+import pyap
 import nltk
 import docx2txt
 import pandas as pd
@@ -221,6 +221,12 @@ class resumeparse(object):
         'thesis',
         'theses',
     )
+    
+ 
+    # address=(
+        
+         
+    # )
        
 
            
@@ -402,7 +408,9 @@ class resumeparse(object):
             'education_and_training': {},
             'skills': {},
             'accomplishments': {},
-            'misc': {}
+            'misc': {},
+            # 'address': {},
+            
         }
 
         resume_indices = []
