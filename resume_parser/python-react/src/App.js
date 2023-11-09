@@ -87,6 +87,10 @@ const App = () => {
                         <textarea id='uni' value={parsedData.university} readOnly />
                     </div>
                     <div>
+                        <label>Profile summery</label>
+                        <textarea id='uni' value={parsedData.objective} readOnly />
+                    </div>
+                    <div>
                         <label>Designation:</label>
                         <textarea id='des' value={parsedData.designition} readOnly />
                     </div>
