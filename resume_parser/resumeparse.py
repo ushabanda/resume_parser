@@ -23,7 +23,7 @@ import nltk
 import re
 import os
 from datetime import date
-import pyap
+
 import nltk
 import docx2txt
 import pandas as pd
@@ -691,7 +691,22 @@ class resumeparse(object):
             return formatted_location.strip()
         else:
             return None
-    
+    def extract_objective(text):
+        objectives = []
+        objective_starts = re.finditer(r'Profile[^\w\n](\w[^\n])', text, re.IGNORECASE)
+
+        for start_match in objective_starts:
+            objective_start = start_match.group(1)
+        # You can use a specific marker to detect the end of the "Objective" section,
+        # for example, using a colon ':' to indicate the end.
+            objective_end_match = re.search(r'(?::|$)', objective_start)
+
+            if objective_end_match:
+                objective_end_index = objective_end_match.start()
+                objective_details = objective_start[:objective_end_index].strip()
+                objectives.append(objective_details)
+
+        return objectives
     
     def extract_address(text):
         nlp = spacy.load("en_core_web_sm")
@@ -764,7 +779,7 @@ class resumeparse(object):
         project_details = resumeparse.extract_projects(full_text)
         location =  resumeparse.extract_location(full_text)
         address_components = resumeparse.extract_address(full_text)
-         
+        objective = resumeparse.extract_objective(full_text) 
          
         return {
             "email": email,
@@ -779,7 +794,8 @@ class resumeparse(object):
             "Companiesworkedat": company_working,
             "Projects": project_details,
             "location": location,
-            "address_components": address_components
+            "address_components": address_components,
+            "objective": objective,
         }
     
     def display(self):
