@@ -70,7 +70,7 @@ const App = () => {
                         <label>last name:</label>
                         <textarea id='name' value={parsedData.last_name} readOnly />
                     </div>
-                    <div>
+                    {/* <div>
                         <label>Total Experience:</label>
                         <textarea id='exp' value={parsedData.total_exp} readOnly />
                     </div>
@@ -85,27 +85,31 @@ const App = () => {
                     <div>
                         <label>University:</label>
                         <textarea id='uni' value={parsedData.university} readOnly />
-                    </div>
+                    </div> */}
                     <div>
+                        <label>Profile summery</label>
+                        <textarea id='uni' value={parsedData.objective} readOnly />
+                    </div>
+                    {/* <div>
                         <label>Designation:</label>
                         <textarea id='des' value={parsedData.designition} readOnly />
                     </div>
                     <div>
                         <label>Degree:</label>
                         <textarea id='deg' value={parsedData.degree} readOnly />
-                    </div>
+                    </div> */}
                     <div>
                         <label>Skills:</label>
                         <textarea id='ski' value={parsedData.skills} readOnly />
                     </div>
-                    <div>
+                    {/* <div>
                         <label>Companies Worked At:</label>
                         <textarea id='com' value={parsedData.Companiesworkedat} readOnly />
                     </div>
                     <div>
                         <label>Projects:</label>
                         <textarea id='pro' value={parsedData.Projects} readOnly />
-                    </div>
+                    </div> */}
                     
                 </div>
             )}
