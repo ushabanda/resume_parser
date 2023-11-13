@@ -606,6 +606,8 @@ class resumeparse(object):
             return span.text
         return ""
 
+      
+
     def extract_university(text, file):
         df = pd.read_csv(file, header=None)
         universities = [i.lower() for i in df[1]]
