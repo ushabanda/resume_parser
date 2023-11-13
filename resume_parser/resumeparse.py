@@ -610,6 +610,47 @@ class resumeparse(object):
                 return email[0].split()[0].strip(';')
             except IndexError:
                 return None
+    
+    def extract_objective(text):
+        objectives = []
+
+        objective_terms = [
+            'career goal',
+            'objective',
+            'profile',
+            'about me',
+            'background',
+            'career objective',
+            'employment objective',
+            'professional objective',        
+            'career summary',
+            'carrier summery',
+            'programmer analyst',
+            'professional summary',
+            'summary of qualifications',
+            'summary',
+        # 'digital'
+        ]
+
+        objective_pattern = '|'.join(map(re.escape, objective_terms))
+
+
+        objective_starts = re.finditer(fr'({objective_pattern})[^\w\n]*(\w[^\n]*)', text, re.IGNORECASE)
+
+
+        for start_match in objective_starts:
+            section_type = start_match.group(1)
+            section_start = start_match.group(2)
+    
+            section_end_match = re.search(r'(?::|$)', section_start)
+
+            if section_end_match:
+                section_end_index = section_end_match.start()
+                section_details = section_start[:section_end_index].strip()
+                objectives.append((section_type, section_details))
+
+        return objectives
+
 
     def extract_name(resume_text):
         nlp_text = nlp(resume_text)
@@ -633,7 +674,6 @@ class resumeparse(object):
                 first_name, last_name = first_name.split(' ', 1)
         return first_name, last_name
 
-<<<<<<< HEAD
       
 
     def extract_university(text, file):
@@ -642,14 +682,12 @@ class resumeparse(object):
         college_name = []
         listex = universities
         listsearch = [text.lower()]
-=======
     # def extract_university(text, file):
     #     df = pd.read_csv(file, header=None)
     #     universities = [i.lower() for i in df[1]]
     #     college_name = []
     #     listex = universities
     #     listsearch = [text.lower()]
->>>>>>> 5849dbe581791596929bab2f789551f5e1ffad77
 
     #     for i in range(len(listex)):
     #         for ii in range(len(listsearch)):
@@ -713,45 +751,45 @@ class resumeparse(object):
     #         return formatted_location.strip()
     #     else:
     #         return None
-    def extract_objective(text):
-        objectives = []
+    # def extract_objective(text):
+    #     objectives = []
 
-        objective_terms = [
-            'career goal',
-            'objective',
-            'profile',
-            'about me',
-            'background',
-            'career objective',
-            'employment objective',
-            'professional objective',        
-            'career summary',
-            'carrier summery',
-            'programmer analyst',
-            'professional summary',
-            'summary of qualifications',
-            'summary',
-        # 'digital'
-        ]
+    #     objective_terms = [
+    #         'career goal',
+    #         'objective',
+    #         'profile',
+    #         'about me',
+    #         'background',
+    #         'career objective',
+    #         'employment objective',
+    #         'professional objective',        
+    #         'career summary',
+    #         'carrier summery',
+    #         'programmer analyst',
+    #         'professional summary',
+    #         'summary of qualifications',
+    #         'summary',
+    #     # 'digital'
+    #     ]
 
-        objective_pattern = '|'.join(map(re.escape, objective_terms))
-
-
-        objective_starts = re.finditer(fr'({objective_pattern})[^\w\n](\w[^\n])', text, re.IGNORECASE)
+    #     objective_pattern = '|'.join(map(re.escape, objective_terms))
 
 
-        for start_match in objective_starts:
-            section_type = start_match.group(1)
-            section_start = start_match.group(2)
+    #     objective_starts = re.finditer(fr'({objective_pattern})[^\w\n](\w[^\n])', text, re.IGNORECASE)
+
+
+    #     for start_match in objective_starts:
+    #         section_type = start_match.group(1)
+    #         section_start = start_match.group(2)
     
-            section_end_match = re.search(r'(?::|$)', section_start)
+    #         section_end_match = re.search(r'(?::|$)', section_start)
 
-            if section_end_match:
-                section_end_index = section_end_match.start()
-                section_details = section_start[:section_end_index].strip()
-                objectives.append((section_type, section_details))
+        #     if section_end_match:
+        #         section_end_index = section_end_match.start()
+        #         section_details = section_start[:section_end_index].strip()
+        #         objectives.append((section_type, section_details))
 
-        return objectives
+        # return objectives
     
     # def extract_address(text):
     #     nlp = spacy.load("en_core_web_sm")
@@ -824,7 +862,8 @@ class resumeparse(object):
         # project_details = resumeparse.extract_projects(full_text)
         # location =  resumeparse.extract_location(full_text)
         # address_components = resumeparse.extract_address(full_text)
-        objective = resumeparse.extract_objective(full_text) 
+        # objective = resumeparse.extract_objective(full_text) 
+        objective = resumeparse.extract_objective(full_text)
          
         return {
             "email": email,
