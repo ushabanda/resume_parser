@@ -37,6 +37,7 @@ import spacy
 from spacy.matcher import Matcher
 from spacy.matcher import PhraseMatcher
 
+
 import sys
 import operator
 import string
@@ -48,6 +49,7 @@ base_path = os.path.dirname(__file__)
 
 
 nlp = spacy.load('en_core_web_sm')
+
 custom_nlp2 = spacy.load(os.path.join(base_path,"degree","model"))
 custom_nlp3 = spacy.load(os.path.join(base_path,"company_working","model"))
 
@@ -107,7 +109,21 @@ class resumeparse(object):
         'professional summary',
         'summary of qualifications',
         'summary',
-        # 'digital'
+        'career goal',
+        'objective',
+        'profile',
+        'about me',
+        'background',
+        'career objective',
+        'employment objective',
+        'professional objective',        
+        'career summary',
+        'carrier summery',
+        'programmer analyst',
+        'professional summary',
+        'summary of qualifications',
+        'summary',
+        'CAREER OBJECTIVE'
     )
 
     work_and_employment = (
@@ -219,6 +235,9 @@ class resumeparse(object):
         'thesis',
         'theses',
     )
+    
+ 
+   
        
 
            
@@ -400,7 +419,9 @@ class resumeparse(object):
             'education_and_training': {},
             'skills': {},
             'accomplishments': {},
-            'misc': {}
+            'misc': {},
+            # 'address': {},
+            
         }
 
         resume_indices = []
@@ -600,12 +621,19 @@ class resumeparse(object):
         matcher.add('NAME', None, pattern)
 
         matches = matcher(nlp_text)
-
+        first_name = ""
+        last_name = ""
         for match_id, start, end in matches:
             span = nlp_text[start:end]
-            return span.text
-        return ""
+            if not first_name:
+                first_name = span.text
+            else:
+                  last_name = span.text    
+        if ' ' in first_name:
+                first_name, last_name = first_name.split(' ', 1)
+        return first_name, last_name
 
+<<<<<<< HEAD
       
 
     def extract_university(text, file):
@@ -614,40 +642,48 @@ class resumeparse(object):
         college_name = []
         listex = universities
         listsearch = [text.lower()]
+=======
+    # def extract_university(text, file):
+    #     df = pd.read_csv(file, header=None)
+    #     universities = [i.lower() for i in df[1]]
+    #     college_name = []
+    #     listex = universities
+    #     listsearch = [text.lower()]
+>>>>>>> 5849dbe581791596929bab2f789551f5e1ffad77
 
-        for i in range(len(listex)):
-            for ii in range(len(listsearch)):
+    #     for i in range(len(listex)):
+    #         for ii in range(len(listsearch)):
                 
-                if re.findall(listex[i], re.sub(' +', ' ', listsearch[ii])):
+    #             if re.findall(listex[i], re.sub(' +', ' ', listsearch[ii])):
                 
-                    college_name.append(listex[i])
+    #                 college_name.append(listex[i])
         
-        return college_name
+    #     return college_name
 
-    def job_designition(text):
-        job_titles = []
+    # def job_designition(text):
+    #     job_titles = []
         
-        __nlp = nlp(text.lower())
+    #     __nlp = nlp(text.lower())
         
-        matches = designitionmatcher(__nlp)
-        for match_id, start, end in matches:
-            span = __nlp[start:end]
-            job_titles.append(span.text)
-        return job_titles
+    #     matches = designitionmatcher(__nlp)
+    #     for match_id, start, end in matches:
+    #         span = __nlp[start:end]
+    #         job_titles.append(span.text)
+    #     return job_titles
 
-    def get_degree(text):
-        doc = custom_nlp2(text)
-        degree = []
+    # def get_degree(text):
+    #     doc = custom_nlp2(text)
+    #     degree = []
 
-        degree = [ent.text.replace("\n", " ") for ent in list(doc.ents) if ent.label_ == 'Degree']
-        return list(dict.fromkeys(degree).keys())
+    #     degree = [ent.text.replace("\n", " ") for ent in list(doc.ents) if ent.label_ == 'Degree']
+    #     return list(dict.fromkeys(degree).keys())
 
-    def get_company_working(text):
-        doc = custom_nlp3(text)
-        degree = []
+    # def get_company_working(text):
+    #     doc = custom_nlp3(text)
+    #     degree = []
 
-        degree = [ent.text.replace("\n", " ") for ent in list(doc.ents)]
-        return list(dict.fromkeys(degree).keys())
+    #     degree = [ent.text.replace("\n", " ") for ent in list(doc.ents)]
+    #     return list(dict.fromkeys(degree).keys())
     
     def extract_skills(text):
 
@@ -662,8 +698,80 @@ class resumeparse(object):
             skills.append(span.text)
         skills = list(set(skills))
         return skills
+    # def extract_location(text):
+    #     nlp = spacy.load("en_core_web_sm")
+    #     doc = nlp(text)
+
+    #     locations = []
+    #     for ent in doc.ents:
+    #         if ent.label_ in ["GPE", "LOC"]:
+    #             locations.append(ent.text)
+
+    #     formatted_location = ', '.join(locations)  # Format as "village, city"
+    
+    #     if formatted_location.strip():
+    #         return formatted_location.strip()
+    #     else:
+    #         return None
+    def extract_objective(text):
+        objectives = []
+
+        objective_terms = [
+            'career goal',
+            'objective',
+            'profile',
+            'about me',
+            'background',
+            'career objective',
+            'employment objective',
+            'professional objective',        
+            'career summary',
+            'carrier summery',
+            'programmer analyst',
+            'professional summary',
+            'summary of qualifications',
+            'summary',
+        # 'digital'
+        ]
+
+        objective_pattern = '|'.join(map(re.escape, objective_terms))
 
 
+        objective_starts = re.finditer(fr'({objective_pattern})[^\w\n](\w[^\n])', text, re.IGNORECASE)
+
+
+        for start_match in objective_starts:
+            section_type = start_match.group(1)
+            section_start = start_match.group(2)
+    
+            section_end_match = re.search(r'(?::|$)', section_start)
+
+            if section_end_match:
+                section_end_index = section_end_match.start()
+                section_details = section_start[:section_end_index].strip()
+                objectives.append((section_type, section_details))
+
+        return objectives
+    
+    # def extract_address(text):
+    #     nlp = spacy.load("en_core_web_sm")
+    #     doc = nlp(text)
+
+    #     address_components = []
+    #     for ent in doc.ents:
+    #         if ent.label_ in ["GPE", "LOC"]:
+    #             if ent.root.dep_ not in ['prep', 'pobj']:  # Exclude prepositions and objects
+    #                 address_components.append(ent.text)
+
+    #     formatted_address = ', '.join(address_components)  # Format as "village, city"
+
+    #     if formatted_address.strip():
+    #         return formatted_address.strip()
+    #     else:
+    #         return None
+   
+    
+    
     def read_file(self, file,docx_parser = "tika"):
         """
         file : Give path of resume file
@@ -693,15 +801,15 @@ class resumeparse(object):
         email = resumeparse.extract_email(full_text)
         phone = resumeparse.find_phone(full_text)
         name = resumeparse.extract_name(" ".join(resume_segments['contact_info']))
-        total_exp, text = resumeparse.get_experience(resume_segments)
-        university = resumeparse.extract_university(full_text, os.path.join(base_path,'world_universities.csv'))
+        # total_exp, text = resumeparse.get_experience(resume_segments)
+        # university = resumeparse.extract_university(full_text, os.path.join(base_path,'world_universities.csv'))
 
-        designition = resumeparse.job_designition(full_text)
-        designition = list(dict.fromkeys(designition).keys())
+        # designition = resumeparse.job_designition(full_text)
+        # designition = list(dict.fromkeys(designition).keys())
 
-        degree = resumeparse.get_degree(full_text)
-        company_working = resumeparse.get_company_working(full_text)
-     
+        # degree = resumeparse.get_degree(full_text)
+        # company_working = resumeparse.get_company_working(full_text)
+       
         skills = ""
 
         if len(resume_segments['skills'].keys()):
@@ -713,22 +821,26 @@ class resumeparse(object):
             skills = resumeparse.extract_skills(full_text)
         skills = list(dict.fromkeys(skills).keys())
          
-        project_details = resumeparse.extract_projects(full_text)
-         
-         
-         
+        # project_details = resumeparse.extract_projects(full_text)
+        # location =  resumeparse.extract_location(full_text)
+        # address_components = resumeparse.extract_address(full_text)
+        objective = resumeparse.extract_objective(full_text) 
          
         return {
             "email": email,
             "phone": phone,
-            "name": name,
-            "total_exp": total_exp,
-            "university": university,
-            "designition": designition,
-            "degree": degree,
+            "first_name": name[0],
+            "last_name": name[1],
+            # "total_exp": total_exp,
+            # "university": university,
+            # "designition": designition,
+            # "degree": degree,
             "skills": skills,
-            "Companiesworkedat": company_working,
-            "Projects": project_details
+            # "Companiesworkedat": company_working,
+            # "Projects": project_details,
+            # "location": location,
+            # "address_components": address_components,
+            "objective": objective,
         }
     
     def display(self):
@@ -739,14 +851,4 @@ parser_obj = resumeparse()
 parsed_resume_data = parser_obj.read_file('sample/Naukri_AbhijeetDey[8y_0m].doc')
 print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
 
-# parser_obj = resumeparse()
-# # parsed_data = parser_obj.read_file('C:/Users/Administrator/Desktop/resume_parser-master v2.1/resume_parser/Ashok_resume.pdf')
-# parsed_resume_data = parser_obj.read_file('Kumar_Resume.pdf')
-# # parser_obj.display()
-
-
-#print("\n\n ========== parsed_data ========= \n\n", parsed_data)
-# sai prasad swain
-
-# print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
 

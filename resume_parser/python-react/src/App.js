@@ -63,47 +63,54 @@ const App = () => {
                         <textarea id='phone' value={parsedData.phone} readOnly />
                     </div>
                     <div>
-                        <label>Name:</label>
-                        <textarea id='name' value={parsedData.name} readOnly />
+                        <label>First name:</label>
+                        <textarea id='name' value={parsedData.first_name} readOnly />
                     </div>
                     <div>
+                        <label>last name:</label>
+                        <textarea id='name' value={parsedData.last_name} readOnly />
+                    </div>
+                    {/* <div>
                         <label>Total Experience:</label>
                         <textarea id='exp' value={parsedData.total_exp} readOnly />
                     </div>
                     <div>
-                        <label>University:</label>
-                        <textarea id='uni' value={parsedData.university} readOnly />
+                        <label>Location:</label>
+                        <textarea id='pro' value={parsedData.location} readOnly />
                     </div>
                     <div>
+                        <label>Address:</label>
+                        <textarea id='pro' value={parsedData.address_components} readOnly />
+                    </div>
+                    <div>
+                        <label>University:</label>
+                        <textarea id='uni' value={parsedData.university} readOnly />
+                    </div> */}
+                    <div>
+                        <label>Profile summery</label>
+                        <textarea id='uni' value={parsedData.objective} readOnly />
+                    </div>
+                    {/* <div>
                         <label>Designation:</label>
                         <textarea id='des' value={parsedData.designition} readOnly />
                     </div>
                     <div>
                         <label>Degree:</label>
                         <textarea id='deg' value={parsedData.degree} readOnly />
-                    </div>
+                    </div> */}
                     <div>
                         <label>Skills:</label>
                         <textarea id='ski' value={parsedData.skills} readOnly />
                     </div>
-                    <div>
+                    {/* <div>
                         <label>Companies Worked At:</label>
                         <textarea id='com' value={parsedData.Companiesworkedat} readOnly />
                     </div>
                     <div>
                         <label>Projects:</label>
                         <textarea id='pro' value={parsedData.Projects} readOnly />
-                    </div>
-                    {/* <div id='email'>Email: {parsedData.email}</div>
-                    <div id='phone'>Phone: {parsedData.phone}</div>
-                   <div id='name'>Name:{parsedData.name}</div>
-                   <div id='exp'>total_exp:{parsedData.total_exp}</div>
-                   <div id='uni'>university:{parsedData.university}</div>
-                   <div id='des'>designition:{parsedData.designition}</div>
-                   <div id='deg'>degree:{parsedData.degree}</div>
-                   <div id='ski'>skills:{parsedData.skills}</div>
-                   <div id='com'>Companies worked at:{parsedData.Companiesworkedat}</div>
-                   <div id='pro'>Projects:{parsedData.Projects}</div> */}
+                    </div> */}
+                    
                 </div>
             )}
 
