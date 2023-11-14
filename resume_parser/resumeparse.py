@@ -618,6 +618,7 @@ class resumeparse(object):
             'career goal',
             'objective',
             'profile',
+            'profile summary',
             'about me',
             'background',
             'career objective',
@@ -628,6 +629,7 @@ class resumeparse(object):
             'programmer analyst',
             'professional summary',
             'summary of qualifications',
+            'it professional ',
             'summary',
         # 'digital'
         ]
