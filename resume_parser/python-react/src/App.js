@@ -31,8 +31,9 @@ const App = () => {
                 
                 setParsedData(parsedData);
                 console.log('Parsed Resume Data:', parsedData);
-                if (parsedData.name) {
-                    textToSpeech(`Hello ${parsedData.name}, AI fill all the details my name is saiprasad swain from odisha now i am working on truetalent internship my degree is bsc and now i am a frontend,and backend both fullstack developer with skills reactjs,php,nodejs,expressjs,mongodb,larabel and sql,python my father name is akshayaswain,he is from odisha now he is a teacher of truetalent.`);
+                if (parsedData.first_name) {
+                    textToSpeech(`Hello ${parsedData.first_name}, Welcome to truetalent indias no1 job search platform thanks for your interest with our platform. Here are some details from your resume: Email: ${parsedData.email}, Phone: ${parsedData.phone}, Skills: ${parsedData.skills}, Profile Summary: ${parsedData.objective}. AI has filled in all your resume details.`);
+        
                 }
             } else {
                 setError('Failed to parse resume');
