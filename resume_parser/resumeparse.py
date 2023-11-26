@@ -177,6 +177,7 @@ class resumeparse(object):
         'areas of knowledge',
         'skills',
         "other skills",
+        "skill sets & certification",
         "other abilities",
         'career related skills',
         'professional skills',
@@ -626,6 +627,7 @@ class resumeparse(object):
             'employment objective',
             'professional objective',        
             'career summary',
+            'work summary',
             'carrier summery',
             'programmer analyst',
             'professional summary',
@@ -881,11 +883,16 @@ class resumeparse(object):
         # address_components = resumeparse.extract_address(full_text)
         # objective = resumeparse.extract_objective(full_text) 
         objective = resumeparse.extract_objective(full_text)
-        full_sentences = objective[0][1]
-        if not full_sentences.endswith('.'):
-            text = full_sentences.split('.')
-            full_sentences = '.'.join(text[:-1])
-        objectives = full_sentences[:1000]
+        if not objective:
+            objectives=""
+        else:
+            full_sentences = objective[0][1][:1500]
+            if not full_sentences.endswith('.'):
+                text = full_sentences.split('.')
+                full_sentences = '.'.join(text[:-1])
+                objectives = full_sentences
+
+        
         words_list = name.split()
         last_name = words_list[-1]
         first_name = words_list[:-1]
@@ -894,8 +901,9 @@ class resumeparse(object):
         return {
             "email": email,
             "phone": phone,
-            "first_name": first_name1,
-            "last_name": last_name,
+            "name":name,
+            "first_name":first_name1,
+            "last_name":last_name,
             # "total_exp": total_exp,
             # "university": university,
             # "designition": designition,
