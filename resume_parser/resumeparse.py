@@ -11,7 +11,7 @@
 
 from __future__ import division
 import nltk
-
+from spacy.matcher import Matcher
 # nltk.download('punkt')
 # nltk.download('averaged_perceptron_tagger')
 # nltk.download('universal_tagset')
@@ -73,31 +73,32 @@ patterns = [nlp.make_doc(text) for text in skill if len(nlp.make_doc(text)) < 10
 skillsmatcher.add("Job title", None, *patterns)
 
 
+
 class resumeparse(object):
-    def extract_projects(text):
-        """
-        Extract project details from the given text.
-        You may need to adapt this function based on how project details are presented in your resume.
+    # def extract_projects(text):
+    #     """
+    #     Extract project details from the given text.
+    #     You may need to adapt this function based on how project details are presented in your resume.
 
-        Parameters:
-        - text (str): The text containing information about projects.
+    #     Parameters:
+    #     - text (str): The text containing information about projects.
 
-        Returns:
-        - List of project details.
-        """
-        projects = []
-        project_starts = re.finditer(r'Project[^\w\n]*(\w[^\n]*)', text, re.IGNORECASE)
+    #     Returns:
+    #     - List of project details.
+    #     """
+    #     projects = []
+    #     project_starts = re.finditer(r'Project[^\w\n]*(\w[^\n]*)', text, re.IGNORECASE)
         
-        for start_match in project_starts:
-            project_start = start_match.group(1)
-            project_end_match = re.search(r'(?:(?:Project|Objective|Work and Employment|Education and Training|Skills|Accomplishments|Misc):|$)', project_start, re.IGNORECASE)
+    #     for start_match in project_starts:
+    #         project_start = start_match.group(1)
+    #         project_end_match = re.search(r'(?:(?:Project|Objective|Work and Employment|Education and Training|Skills|Accomplishments|Misc):|$)', project_start, re.IGNORECASE)
             
-            if project_end_match:
-                project_end_index = project_end_match.start()
-                project_details = project_start[:project_end_index].strip()
-                projects.append(project_details)
+    #         if project_end_match:
+    #             project_end_index = project_end_match.start()
+    #             project_details = project_start[:project_end_index].strip()
+    #             projects.append(project_details)
 
-        return projects
+    #     return projects
        
     objective = (
         'career goal',
@@ -123,7 +124,9 @@ class resumeparse(object):
         'professional summary',
         'summary of qualifications',
         'summary',
-        'CAREER OBJECTIVE'
+        'CAREER OBJECTIVE',
+        'IT PROFICIENCY',
+        'SOFT SKILLS'
     )
 
     work_and_employment = (
@@ -188,10 +191,29 @@ class resumeparse(object):
         'technologies',
         'technical experience',
         'proficiencies',
-        'languages',
+        # 'languages',
         'language competencies and skills',
         'programming languages',
-        'competencies'
+        'competencies',
+        'technical expertise',
+        'sofwares & programming languages known',
+        'skill set',
+        'skill sets',
+        'Skills Summary',
+        'core qualifications',
+        'software skills',
+        'it and it related ',
+        'key technical skills',
+        'skills summary',
+        'technical skill set & environment',
+        'administrative skills',
+        'key skills',
+        'it skills',
+        'Skills Synopsis & Experience',
+        'primary skills',
+        'soft skills',
+        'it proficience',
+        
     )
 
     misc = (
@@ -654,7 +676,7 @@ class resumeparse(object):
         return objectives
 
 
-    def extract_name(resume_text):
+    def extract_names(resume_text):
         nlp_text = nlp(resume_text)
 
         # First name and Last name are always Proper Nouns
@@ -675,8 +697,22 @@ class resumeparse(object):
         if ' ' in first_name:
                 first_name, last_name = first_name.split(' ', 1)
         return first_name, last_name
+    
+    def extract_name(resume_text):
+        nlp_text = nlp(resume_text)
 
-      
+        # First name and Last name are always Proper Nouns
+        # pattern_FML = [{'POS': 'PROPN', 'ENT_TYPE': 'PERSON', 'OP': '+'}]
+
+        pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'}]
+        matcher.add('NAME', None, pattern)
+
+        matches = matcher(nlp_text)
+
+        for match_id, start, end in matches:
+            span = nlp_text[start:end]
+            return span.text
+        return""
 
     def extract_university(text, file):
         df = pd.read_csv(file, header=None)
@@ -724,6 +760,7 @@ class resumeparse(object):
 
     #     degree = [ent.text.replace("\n", " ") for ent in list(doc.ents)]
     #     return list(dict.fromkeys(degree).keys())
+      
     
     def extract_skills(text):
 
@@ -738,6 +775,80 @@ class resumeparse(object):
             skills.append(span.text)
         skills = list(set(skills))
         return skills
+   
+   
+   
+   
+    # def extract_skills(text, skills_header):
+    #     skills = []
+
+    #     # Assuming that skills_header is a list of patterns for skill headers
+    #     for header_pattern in skills_header:
+    #         matches = re.finditer(fr'({re.escape(header_pattern)})[^\w\n]*(\w[^\n]*)', text, re.IGNORECASE)
+    #         for start_match in matches:
+    #             section_start = start_match.group(2)
+    #             section_end_match = re.search(r'(?::|$)', section_start)
+    #             if section_end_match:
+    #                 section_end_index = section_end_match.start()
+    #                 section_details = section_start[:section_end_index].strip()
+    #                 skills.append(section_details)
+
+    #     return skills
+
+
+    # # Example usage:
+    # skills_header = (
+    #     'credentials',
+    #     'areas of experience',
+    #     'areas of expertise',
+    #     'areas of knowledge',
+    #     'skills',
+    #     "other skills",
+    #     "other abilities",
+    #     'career related skills',
+    #     'professional skills',
+    #     'specialized skills',
+    #     'technical skills',
+    #     'computer skills',
+    #     'personal skills',
+    #     'computer knowledge',
+    #     'technologies',
+    #     'technical experience',
+    #     'proficiencies',
+    #     'languages',
+    #     'language competencies and skills',
+    #     'programming languages',
+    #     'competencies',
+    #     'technical expertise',
+    #     'sofwares & programming languages known',
+    #     'skill set',
+    #     'skill sets',
+    #     'Skills Summary',
+    #     'core qualifications',
+    #     'software skills',
+    #     'it and it related ',
+    #     'key technical skills',
+    #     'skills summary',
+    #     'technical skill set & environment',
+    #     'administrative skills',
+    #     'key skills',
+    #     'IT Skills',
+    #     'Skills Synopsis & Experience',
+    #     'primary skills',
+    #     'SOFT SKILLS',
+    #     'IT PROFICIENCY',
+    # )
+
+    # # Assuming text is your resume text
+    # resume_text = """
+    # Your resume text goes here.
+    # Skills: Python, Java, C++
+    # Professional Skills: Data Analysis, Machine Learning
+    # """
+
+    # extracted_skills = extract_skills(resume_text, skills_header)
+    # print("Extracted Skills:", extracted_skills)
+
     # def extract_location(text):
     #     nlp = spacy.load("en_core_web_sm")
     #     doc = nlp(text)
@@ -841,6 +952,7 @@ class resumeparse(object):
         email = resumeparse.extract_email(full_text)
         phone = resumeparse.find_phone(full_text)
         name = resumeparse.extract_name(" ".join(resume_segments['contact_info']))
+        names = resumeparse.extract_names(" ".join(resume_segments['contact_info']))
         # total_exp, text = resumeparse.get_experience(resume_segments)
         # university = resumeparse.extract_university(full_text, os.path.join(base_path,'world_universities.csv'))
 
@@ -854,24 +966,27 @@ class resumeparse(object):
 
         if len(resume_segments['skills'].keys()):
             for key , values in resume_segments['skills'].items():
-              skills += re.sub(key, '', ",".join(values), flags=re.IGNORECASE)            
+      
+                    skills += re.sub(key, '', ",".join(values), flags=re.IGNORECASE)        
             skills = skills.strip().strip(",").split(",")
         
         if len(skills) == 0:
             skills = resumeparse.extract_skills(full_text)
         skills = list(dict.fromkeys(skills).keys())
-         
+        
+        
         # project_details = resumeparse.extract_projects(full_text)
         # location =  resumeparse.extract_location(full_text)
         # address_components = resumeparse.extract_address(full_text)
         # objective = resumeparse.extract_objective(full_text) 
         objective = resumeparse.extract_objective(full_text)
-         
+        # skills = extract_skills(full_text) 
         return {
             "email": email,
             "phone": phone,
-            "first_name": name[0],
-            "last_name": name[1],
+            "first_name": names[0],
+            "last_name":names[1],
+            "full_name":name,
             # "total_exp": total_exp,
             # "university": university,
             # "designition": designition,
