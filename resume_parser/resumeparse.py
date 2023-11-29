@@ -188,10 +188,13 @@ class resumeparse(object):
         'technologies',
         'technical experience',
         'proficiencies',
-        'languages',
         'language competencies and skills',
         'programming languages',
-        'competencies'
+        'competencies',
+        'it forte',
+        'personality traits',
+        'skill sets & certification',
+        'technical expertise'
     )
 
     misc = (
@@ -655,26 +658,36 @@ class resumeparse(object):
 
 
     def extract_name(resume_text):
+        print("resume_text is ",resume_text)
         nlp_text = nlp(resume_text)
 
         # First name and Last name are always Proper Nouns
         # pattern_FML = [{'POS': 'PROPN', 'ENT_TYPE': 'PERSON', 'OP': '+'}]
 
-        pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'}]
+        # pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'}]
+        pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'},{'POS': 'PROPN'}]
         matcher.add('NAME', None, pattern)
 
         matches = matcher(nlp_text)
-        first_name = ""
-        last_name = ""
+        first_name = None
+        last_name = None
+        print("\n\n ===== nlp_text ====== \n\n", nlp_text)
         for match_id, start, end in matches:
             span = nlp_text[start:end]
-            if not first_name:
-                first_name = span.text
-            else:
-                  last_name = span.text    
-        if ' ' in first_name:
-                first_name, last_name = first_name.split(' ', 1)
-        return first_name, last_name
+            name_parts = span.text.split(' ')
+            print("\n\n ===== span ====== \n\n", span)
+            print("Name parts:",name_parts)
+            print("Length of name_parts:", len(name_parts))
+            if len(name_parts) >= 2:
+             first_name = name_parts[0] + ' ' +name_parts[1]
+             last_name = name_parts[-1]
+            break
+        
+
+        if first_name and last_name:
+            return first_name, last_name
+        else:
+            return None, None
 
       
 
@@ -891,5 +904,3 @@ class resumeparse(object):
 parser_obj = resumeparse()
 parsed_resume_data = parser_obj.read_file('sample/Naukri_AbhijeetDey[8y_0m].doc')
 print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
-
-
