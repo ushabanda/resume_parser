@@ -180,6 +180,7 @@ class resumeparse(object):
         'areas of knowledge',
         'skills',
         "other skills",
+        "skill sets & certification",
         "other abilities",
         'career related skills',
         'professional skills',
@@ -191,6 +192,7 @@ class resumeparse(object):
         'technologies',
         'technical experience',
         'proficiencies',
+<<<<<<< HEAD
         # 'languages',
         'language competencies and skills',
         'programming languages',
@@ -214,6 +216,15 @@ class resumeparse(object):
         'soft skills',
         'it proficience',
         
+=======
+        'language competencies and skills',
+        'programming languages',
+        'competencies',
+        'it forte',
+        'personality traits',
+        'skill sets & certification',
+        'technical expertise'
+>>>>>>> 01eb12f6da8a8ddb29d790593930e76b2de9e02d
     )
 
     misc = (
@@ -640,6 +651,7 @@ class resumeparse(object):
             'career goal',
             'objective',
             'profile',
+            'PROFILE',
             'profile summary',
             'about me',
             'background',
@@ -647,13 +659,13 @@ class resumeparse(object):
             'employment objective',
             'professional objective',        
             'career summary',
+            'work summary',
             'carrier summery',
             'programmer analyst',
             'professional summary',
             'summary of qualifications',
             'it professional ',
-            'summary',
-        # 'digital'
+            'summary'
         ]
 
         objective_pattern = '|'.join(map(re.escape, objective_terms))
@@ -676,20 +688,47 @@ class resumeparse(object):
         return objectives
 
 
+<<<<<<< HEAD
     def extract_names(resume_text):
+=======
+    # def extract_name(resume_text):
+    #     nlp_text = nlp(resume_text)
+
+    #     # First name and Last name are always Proper Nouns
+    #     # pattern_FML = [{'POS': 'PROPN', 'ENT_TYPE': 'PERSON', 'OP': '+'}]
+
+    #     pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'}]
+    #     matcher.add('NAME', None, pattern)
+
+    #     matches = matcher(nlp_text)
+    #     first_name = ""
+    #     last_name = ""
+    #     for match_id, start, end in matches:
+    #         span = nlp_text[start:end]
+    #         if not first_name:
+    #             first_name = span.text
+    #         else:
+    #               last_name = span.text    
+    #     if ' ' in first_name:
+    #             first_name, last_name = first_name.split(' ', 1)
+    #     return first_name, last_name
+    def extract_name(resume_text):
+        print("resume_text is ",resume_text)
+>>>>>>> 01eb12f6da8a8ddb29d790593930e76b2de9e02d
         nlp_text = nlp(resume_text)
 
         # First name and Last name are always Proper Nouns
         # pattern_FML = [{'POS': 'PROPN', 'ENT_TYPE': 'PERSON', 'OP': '+'}]
 
-        pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'}]
+        # pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'}]
+        pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'},{'POS': 'PROPN'}]
         matcher.add('NAME', None, pattern)
 
         matches = matcher(nlp_text)
-        first_name = ""
-        last_name = ""
+
         for match_id, start, end in matches:
             span = nlp_text[start:end]
+<<<<<<< HEAD
             if not first_name:
                 first_name = span.text
             else:
@@ -700,6 +739,10 @@ class resumeparse(object):
     
     def extract_name(resume_text):
         nlp_text = nlp(resume_text)
+=======
+            return span.text
+        return""
+>>>>>>> 01eb12f6da8a8ddb29d790593930e76b2de9e02d
 
         # First name and Last name are always Proper Nouns
         # pattern_FML = [{'POS': 'PROPN', 'ENT_TYPE': 'PERSON', 'OP': '+'}]
@@ -980,6 +1023,7 @@ class resumeparse(object):
         # address_components = resumeparse.extract_address(full_text)
         # objective = resumeparse.extract_objective(full_text) 
         objective = resumeparse.extract_objective(full_text)
+<<<<<<< HEAD
         # skills = extract_skills(full_text) 
         return {
             "email": email,
@@ -987,6 +1031,29 @@ class resumeparse(object):
             "first_name": names[0],
             "last_name":names[1],
             "full_name":name,
+=======
+        if not objective:
+            objectives=""
+        else:
+            full_sentences = objective[0][1][:1500]
+            if not full_sentences.endswith('.'):
+                text = full_sentences.split('.')
+                full_sentences = '.'.join(text[:-1])
+                objectives = full_sentences
+
+        
+        words_list = name.split()
+        last_name = words_list[-1]
+        first_name = words_list[:-1]
+        first_name1 = "".join(first_name)
+         
+        return {
+            "email": email,
+            "phone": phone,
+            "name":name,
+            "first_name":first_name1,
+            "last_name":last_name,
+>>>>>>> 01eb12f6da8a8ddb29d790593930e76b2de9e02d
             # "total_exp": total_exp,
             # "university": university,
             # "designition": designition,
@@ -996,7 +1063,7 @@ class resumeparse(object):
             # "Projects": project_details,
             # "location": location,
             # "address_components": address_components,
-            "objective": objective,
+            "objective": objectives,
         }
     
     def display(self):
@@ -1006,5 +1073,3 @@ class resumeparse(object):
 parser_obj = resumeparse()
 parsed_resume_data = parser_obj.read_file('sample/Naukri_AbhijeetDey[8y_0m].doc')
 print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
-
-

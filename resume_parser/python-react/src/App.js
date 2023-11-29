@@ -32,7 +32,11 @@ const App = () => {
                 setParsedData(parsedData);
                 console.log('Parsed Resume Data:', parsedData);
                 if (parsedData.first_name) {
+<<<<<<< HEAD
                     textToSpeech(`Hello ${parsedData.first_name}, Welcome to truetalent indias no1 hairing platform thanks for your interest with our platform. Here are some details from your resume: Email: ${parsedData.email}, Phone: ${parsedData.phone}, Skills: ${parsedData.skills}, Profile Summary: ${parsedData.objective}. AI has filled in all your resume details.`);
+=======
+                    // textToSpeech(`Hello ${parsedData.first_name}, Welcome to truetalent indias no1 job search platform thanks for your interest with our platform. Here are some details from your resume: Email: ${parsedData.email}, Phone: ${parsedData.phone}, Skills: ${parsedData.skills}, Profile Summary: ${parsedData.objective}. AI has filled in all your resume details.`);
+>>>>>>> 01eb12f6da8a8ddb29d790593930e76b2de9e02d
         
                 }
             } else {
@@ -65,12 +69,17 @@ const App = () => {
                     </div>
                     <div>
                         <label>Full name:</label>
+<<<<<<< HEAD
                         <textarea id='name' value={parsedData.full_name} readOnly />
+=======
+                        <textarea id='name' value={parsedData.name} readOnly />
+>>>>>>> 01eb12f6da8a8ddb29d790593930e76b2de9e02d
                     </div>
                     <div>
                         <label>First name:</label>
                         <textarea id='name' value={parsedData.first_name} readOnly />
                     </div>
+                    
                     <div>
                         <label>last name:</label>
                         <textarea id='name' value={parsedData.last_name} readOnly />
