@@ -177,6 +177,7 @@ class resumeparse(object):
         'areas of knowledge',
         'skills',
         "other skills",
+        "skill sets & certification",
         "other abilities",
         'career related skills',
         'professional skills',
@@ -621,6 +622,7 @@ class resumeparse(object):
             'career goal',
             'objective',
             'profile',
+            'PROFILE',
             'profile summary',
             'about me',
             'background',
@@ -628,13 +630,13 @@ class resumeparse(object):
             'employment objective',
             'professional objective',        
             'career summary',
+            'work summary',
             'carrier summery',
             'programmer analyst',
             'professional summary',
             'summary of qualifications',
             'it professional ',
-            'summary',
-        # 'digital'
+            'summary'
         ]
 
         objective_pattern = '|'.join(map(re.escape, objective_terms))
@@ -657,6 +659,27 @@ class resumeparse(object):
         return objectives
 
 
+    # def extract_name(resume_text):
+    #     nlp_text = nlp(resume_text)
+
+    #     # First name and Last name are always Proper Nouns
+    #     # pattern_FML = [{'POS': 'PROPN', 'ENT_TYPE': 'PERSON', 'OP': '+'}]
+
+    #     pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'}]
+    #     matcher.add('NAME', None, pattern)
+
+    #     matches = matcher(nlp_text)
+    #     first_name = ""
+    #     last_name = ""
+    #     for match_id, start, end in matches:
+    #         span = nlp_text[start:end]
+    #         if not first_name:
+    #             first_name = span.text
+    #         else:
+    #               last_name = span.text    
+    #     if ' ' in first_name:
+    #             first_name, last_name = first_name.split(' ', 1)
+    #     return first_name, last_name
     def extract_name(resume_text):
         print("resume_text is ",resume_text)
         nlp_text = nlp(resume_text)
@@ -669,25 +692,11 @@ class resumeparse(object):
         matcher.add('NAME', None, pattern)
 
         matches = matcher(nlp_text)
-        first_name = None
-        last_name = None
-        print("\n\n ===== nlp_text ====== \n\n", nlp_text)
+
         for match_id, start, end in matches:
             span = nlp_text[start:end]
-            name_parts = span.text.split(' ')
-            print("\n\n ===== span ====== \n\n", span)
-            print("Name parts:",name_parts)
-            print("Length of name_parts:", len(name_parts))
-            if len(name_parts) >= 2:
-             first_name = name_parts[0] + ' ' +name_parts[1]
-             last_name = name_parts[-1]
-            break
-        
-
-        if first_name and last_name:
-            return first_name, last_name
-        else:
-            return None, None
+            return span.text
+        return""
 
       
 
@@ -879,12 +888,27 @@ class resumeparse(object):
         # address_components = resumeparse.extract_address(full_text)
         # objective = resumeparse.extract_objective(full_text) 
         objective = resumeparse.extract_objective(full_text)
+        if not objective:
+            objectives=""
+        else:
+            full_sentences = objective[0][1][:1500]
+            if not full_sentences.endswith('.'):
+                text = full_sentences.split('.')
+                full_sentences = '.'.join(text[:-1])
+                objectives = full_sentences
+
+        
+        words_list = name.split()
+        last_name = words_list[-1]
+        first_name = words_list[:-1]
+        first_name1 = "".join(first_name)
          
         return {
             "email": email,
             "phone": phone,
-            "first_name": name[0],
-            "last_name": name[1],
+            "name":name,
+            "first_name":first_name1,
+            "last_name":last_name,
             # "total_exp": total_exp,
             # "university": university,
             # "designition": designition,
@@ -894,7 +918,7 @@ class resumeparse(object):
             # "Projects": project_details,
             # "location": location,
             # "address_components": address_components,
-            "objective": objective,
+            "objective": objectives,
         }
     
     def display(self):
