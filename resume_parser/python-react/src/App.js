@@ -32,11 +32,8 @@ const App = () => {
                 setParsedData(parsedData);
                 console.log('Parsed Resume Data:', parsedData);
                 if (parsedData.first_name) {
-<<<<<<< HEAD
                     textToSpeech(`Hello ${parsedData.first_name}, Welcome to truetalent indias no1 hairing platform thanks for your interest with our platform. Here are some details from your resume: Email: ${parsedData.email}, Phone: ${parsedData.phone}, Skills: ${parsedData.skills}, Profile Summary: ${parsedData.objective}. AI has filled in all your resume details.`);
-=======
                     // textToSpeech(`Hello ${parsedData.first_name}, Welcome to truetalent indias no1 job search platform thanks for your interest with our platform. Here are some details from your resume: Email: ${parsedData.email}, Phone: ${parsedData.phone}, Skills: ${parsedData.skills}, Profile Summary: ${parsedData.objective}. AI has filled in all your resume details.`);
->>>>>>> 01eb12f6da8a8ddb29d790593930e76b2de9e02d
         
                 }
             } else {
@@ -60,20 +57,9 @@ const App = () => {
                 <div>
                     <h2>Contact Information:</h2>
                     <div>
-                        <label>Email:</label>
-                        <textarea id='email' value={parsedData.email} readOnly />
-                    </div>
-                    <div>
-                        <label>Phone:</label>
-                        <textarea id='phone' value={parsedData.phone} readOnly />
-                    </div>
-                    <div>
                         <label>Full name:</label>
-<<<<<<< HEAD
-                        <textarea id='name' value={parsedData.full_name} readOnly />
-=======
+                    
                         <textarea id='name' value={parsedData.name} readOnly />
->>>>>>> 01eb12f6da8a8ddb29d790593930e76b2de9e02d
                     </div>
                     <div>
                         <label>First name:</label>
@@ -84,6 +70,19 @@ const App = () => {
                         <label>last name:</label>
                         <textarea id='name' value={parsedData.last_name} readOnly />
                     </div>
+                    <div>
+                        <label>Email:</label>
+                        <textarea id='email' value={parsedData.email} readOnly />
+                    </div>
+                    <div>
+                        <label>Phone:</label>
+                        <textarea id='phone' value={parsedData.phone} readOnly />
+                    </div>
+                    <div>
+                        <label>Skills:</label>
+                        <textarea id='ski' value={parsedData.skills} readOnly />
+                    </div>
+                    
                     {/* <div>
                         <label>Total Experience:</label>
                         <textarea id='exp' value={parsedData.total_exp} readOnly />
@@ -100,10 +99,10 @@ const App = () => {
                         <label>University:</label>
                         <textarea id='uni' value={parsedData.university} readOnly />
                     </div> */}
-                    <div>
+                    {/* <div>
                         <label>Profile summery</label>
                         <textarea id='uni' value={parsedData.objective} readOnly />
-                    </div>
+                    </div> */}
                     {/* <div>
                         <label>Designation:</label>
                         <textarea id='des' value={parsedData.designition} readOnly />
@@ -112,10 +111,7 @@ const App = () => {
                         <label>Degree:</label>
                         <textarea id='deg' value={parsedData.degree} readOnly />
                     </div> */}
-                    <div>
-                        <label>Skills:</label>
-                        <textarea id='ski' value={parsedData.skills} readOnly />
-                    </div>
+                   
                     {/* <div>
                         <label>Companies Worked At:</label>
                         <textarea id='com' value={parsedData.Companiesworkedat} readOnly />
