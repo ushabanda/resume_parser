@@ -4,6 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app, resources={r"/resumeparse": {"origins": "http://localhost:3000"}})
+
 class ResumeParser:
     @staticmethod
     def parse_resume(resume_file_path, docx_parser="tika"):
@@ -15,7 +16,6 @@ class ResumeParser:
 def parse_resume():
     print("Received a request to parse resume")
     try:
-        
         # Get the resume file from the request
         resume_file = request.files['resume']
         docx_parser = request.form.get('docx_parser', 'tika')
@@ -26,7 +26,7 @@ def parse_resume():
 
         # Parse the resume
         parsed_resume_data = ResumeParser.parse_resume(resume_file_path, docx_parser)
-      
+
         return jsonify(parsed_resume_data)
 
     except Exception as e:
