@@ -759,15 +759,15 @@ class resumeparse(object):
          
          
         return {
-            "email": email,
-            "phone": phone,
             "first_name": name[0],
             "last_name": name[1],
+            "email": email,
+            "phone": phone,
+            "skills": skills,
             "total_exp": total_exp,
             "university": university,
             "designition": designition,
             "degree": degree,
-            "skills": skills,
             "Companiesworkedat": company_working,
             "Projects": project_details,
             "locations": location,
