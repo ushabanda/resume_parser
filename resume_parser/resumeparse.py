@@ -764,14 +764,14 @@ class resumeparse(object):
             "email": email,
             "phone": phone,
             "skills": skills,
-            "total_exp": total_exp,
-            "university": university,
-            "designition": designition,
-            "degree": degree,
-            "Companiesworkedat": company_working,
-            "Projects": project_details,
-            "locations": location,
-            "address_components": address_components
+            # "total_exp": total_exp,
+            # "university": university,
+            # "designition": designition,
+            # "degree": degree,
+            # "Companiesworkedat": company_working,
+            # "Projects": project_details,
+            # "locations": location,
+            # "address_components": address_components
         }
     
     def display(self):
