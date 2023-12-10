@@ -56,19 +56,19 @@ const App = () => {
             {parsedData && (
                 <div>
                     <h2>Contact Information:</h2>
-                    <div>
+                    {/* <div>
                         <label>Full name:</label>
                     
                         <textarea id='name' value={parsedData.name} readOnly />
-                    </div>
+                    </div> */}
                     <div>
                         <label>First name:</label>
-                        <textarea id='name' value={parsedData.first_name} readOnly />
+                        <textarea id='nam' value={parsedData.first_name} readOnly />
                     </div>
                     
                     <div>
                         <label>last name:</label>
-                        <textarea id='name' value={parsedData.last_name} readOnly />
+                        <textarea id='nae' value={parsedData.last_name} readOnly />
                     </div>
                     <div>
                         <label>Email:</label>
