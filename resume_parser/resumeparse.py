@@ -592,6 +592,50 @@ class resumeparse(object):
             except IndexError:
                 return None
 
+    def extract_objective(text):
+        objectives = []
+
+        objective_terms = [
+            'career goal',
+            'objective',
+            'profile',
+            'PROFILE',
+            'profile summary',
+            'profile & strengths',
+            'about me',
+            'background',
+            'career objective',
+            'employment objective',
+            'professional objective',        
+            'career summary',
+            'work summary',
+            'carrier summery',
+            'programmer analyst',
+            'professional summary',
+            'summary of qualifications',
+            'it professional ',
+            'summary'
+        ]
+
+        objective_pattern = '|'.join(map(re.escape, objective_terms))
+
+
+        objective_starts = re.finditer(fr'({objective_pattern})[^\w\n]*(\w[^\n]*)', text, re.IGNORECASE)
+
+
+        for start_match in objective_starts:
+            section_type = start_match.group(1)
+            section_start = start_match.group(2)
+    
+            section_end_match = re.search(r'(?::|$)', section_start)
+
+            if section_end_match:
+                section_end_index = section_end_match.start()
+                section_details = section_start[:section_end_index].strip()
+                objectives.append((section_type, section_details))
+
+        return objectives
+   
     def extract_name(resume_text):
         nlp_text = nlp(resume_text)
 
@@ -733,6 +777,7 @@ class resumeparse(object):
         email = resumeparse.extract_email(full_text)
         phone = resumeparse.find_phone(full_text)
         name = resumeparse.extract_name(" ".join(resume_segments['contact_info']))
+  
         total_exp, text = resumeparse.get_experience(resume_segments)
         university = resumeparse.extract_university(full_text, os.path.join(base_path,'world_universities.csv'))
 
@@ -756,18 +801,29 @@ class resumeparse(object):
         project_details = resumeparse.extract_projects(full_text)
         location =  resumeparse.extract_location(full_text)
         address_components = resumeparse.extract_address(full_text)
+
+        objective = resumeparse.extract_objective(full_text)
+        if not objective:
+            objectives=""
+        else:
+            full_sentences = objective[0][1][:1500]
+            if not full_sentences.endswith('.'):
+                text = full_sentences.split('.')
+                full_sentences = '.'.join(text[:-1])
+                objectives = full_sentences
          
          
         return {
-            "first_name": name[0],
-            "last_name": name[1],
             "email": email,
             "phone": phone,
-            "skills": skills,
+            "first_name": name[0],
+            "last_name": name[1],
+            "objective":objectives,
             # "total_exp": total_exp,
             # "university": university,
             # "designition": designition,
             # "degree": degree,
+            "skills": skills,
             # "Companiesworkedat": company_working,
             # "Projects": project_details,
             # "locations": location,
@@ -779,7 +835,7 @@ class resumeparse(object):
         
         
 parser_obj = resumeparse()
-parsed_resume_data = parser_obj.read_file('sample/Naukri_AbhijeetDey[8y_0m].doc')
-print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
+# parsed_resume_data = parser_obj.read_file('sample/Naukri_AbhijeetDey[8y_0m].doc')
+# print("\n\n ========== parsed_data ========= \n\n")
 
 

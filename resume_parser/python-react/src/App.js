@@ -60,10 +60,7 @@ const App = () => {
             {parsedData && (
                 <div>
                     <h2>Contact Information:</h2>
-                    <div>
-                        <label>Full name:</label>
-                        <textarea id='name' value={parsedData.name} readOnly />
-                    </div>
+                   
                     <div>
                         <label>First name:</label>
                         <textarea id='name' value={parsedData.first_name} readOnly />
