@@ -621,6 +621,7 @@ class resumeparse(object):
             'profile',
             'PROFILE',
             'profile summary',
+            'profile & strengths',
             'about me',
             'background',
             'career objective',
@@ -921,7 +922,7 @@ class resumeparse(object):
         
         
 parser_obj = resumeparse()
-parsed_resume_data = parser_obj.read_file('sample/Naukri_AbhijeetDey[8y_0m].doc')
-print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
+parsed_resume_data = parser_obj.read_file('kumar_Resume.pdf')
+# print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
 
 

@@ -31,9 +31,8 @@ const App = () => {
                 
                 setParsedData(parsedData);
                 console.log('Parsed Resume Data:', parsedData);
-                if (parsedData.first_name) {
-                    textToSpeech(`Hello ${parsedData.first_name}, Welcome to truetalent indias no1 job search platform thanks for your interest with our platform. Here are some details from your resume: Email: ${parsedData.email}, Phone: ${parsedData.phone}, Skills: ${parsedData.skills}, Profile Summary: ${parsedData.objective}. AI has filled in all your resume details.`);
-        
+                if (parsedData.name) {
+                    //textToSpeech(Hello ${parsedData.name}, AI fill all the details my name is saiprasad swain from odisha now i am working on truetalent internship my degree is bsc and now i am a frontend,and backend both fullstack developer with skills reactjs,php,nodejs,expressjs,mongodb,larabel and sql,python my father name is akshayaswain,he is from odisha now he is a teacher of truetalent.);
                 }
             } else {
                 setError('Failed to parse resume');
@@ -71,52 +70,18 @@ const App = () => {
                         <label>First name:</label>
                         <textarea id='name' value={parsedData.first_name} readOnly />
                     </div>
-                    
                     <div>
                         <label>last name:</label>
                         <textarea id='name' value={parsedData.last_name} readOnly />
                     </div>
-                    {/* <div>
-                        <label>Total Experience:</label>
-                        <textarea id='exp' value={parsedData.total_exp} readOnly />
-                    </div>
                     <div>
-                        <label>Location:</label>
-                        <textarea id='pro' value={parsedData.location} readOnly />
+                        <label>Objective:</label>
+                        <textarea id='des' value={parsedData.objective} readOnly />
                     </div>
-                    <div>
-                        <label>Address:</label>
-                        <textarea id='pro' value={parsedData.address_components} readOnly />
-                    </div>
-                    <div>
-                        <label>University:</label>
-                        <textarea id='uni' value={parsedData.university} readOnly />
-                    </div> */}
-                    <div>
-                        <label>Profile summery</label>
-                        <textarea id='uni' value={parsedData.objective} readOnly />
-                    </div>
-                    {/* <div>
-                        <label>Designation:</label>
-                        <textarea id='des' value={parsedData.designition} readOnly />
-                    </div>
-                    <div>
-                        <label>Degree:</label>
-                        <textarea id='deg' value={parsedData.degree} readOnly />
-                    </div> */}
                     <div>
                         <label>Skills:</label>
                         <textarea id='ski' value={parsedData.skills} readOnly />
                     </div>
-                    {/* <div>
-                        <label>Companies Worked At:</label>
-                        <textarea id='com' value={parsedData.Companiesworkedat} readOnly />
-                    </div>
-                    <div>
-                        <label>Projects:</label>
-                        <textarea id='pro' value={parsedData.Projects} readOnly />
-                    </div> */}
-                    
                 </div>
             )}
 
@@ -125,5 +90,4 @@ const App = () => {
     );
 };
 
-export default App;
-
+export default App;
