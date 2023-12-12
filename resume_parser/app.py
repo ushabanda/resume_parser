@@ -6,7 +6,7 @@ from flask_cors import CORS
 # from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
-CORS(app, resources={r"/resumeparse": {"origins":["http://13.127.233.49", "http://localhost:3000"]}})
+CORS(app, resources={r"/resumeparse": {"origins":["http://35.154.206.253", "http://localhost:3000"]}})
 # app_logger = logging.getLogger(__name__)
 # log_handler = RotatingFileHandler('logging.log', maxBytes=2048, backupCount=1)
 # log_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
@@ -16,7 +16,6 @@ CORS(app, resources={r"/resumeparse": {"origins":["http://13.127.233.49", "http:
 
 
 class ResumeParser:
-    logging.info(f'inside Class:ResumeParser')
     @staticmethod
     def parse_resume(resume_file_path, docx_parser="tika"):
         parser_obj = resumeparse()
@@ -25,12 +24,11 @@ class ResumeParser:
 @app.route('/')
 def home():
     response = jsonify({'message': 'Hello, world!'})
-    response.headers.add('Access-Control-Allow-Origin', 'http://13.127.233.49')
+    response.headers.add('Access-Control-Allow-Origin', 'http://35.154.206.253')
     response.headers.add('X-Content-Type-Options', 'nosniff')
     return response
 @app.route('/resumeparse', methods=['POST'])
 def parse_resume():
-    app_logger.info(f"Request received")
     print("Received a request to parse resume")
     try:
         # Get the resume file from the request
@@ -49,14 +47,14 @@ def parse_resume():
 
         response = jsonify(parsed_resume_data)
 
-        response.headers.add('Access-Control-Allow-Origin', 'http://13.127.233.49')
+        response.headers.add('Access-Control-Allow-Origin', 'http://35.154.206.253')
         response.headers.add('X-Content-Type-Options', 'nosniff')
         return response
 
     except Exception as e:
             print(f"Error: {str(e)}")
             response = jsonify({'error': str(e)})
-            response.headers.add('Access-Control-Allow-Origin', 'http://13.127.233.49')
+            response.headers.add('Access-Control-Allow-Origin', 'http://35.154.206.253')
             response.headers.add('X-Content-Type-Options', 'nosniff')
             return response
 @app.route('/greet', methods=['POST'])

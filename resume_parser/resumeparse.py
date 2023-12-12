@@ -835,12 +835,7 @@ class resumeparse(object):
         
         
 parser_obj = resumeparse()
-<<<<<<< HEAD
-parsed_resume_data = parser_obj.read_file('kumar_Resume.pdf')
-# print("\n\n ========== parsed_data ========= \n\n", parsed_resume_data)
-=======
 # parsed_resume_data = parser_obj.read_file('sample/Naukri_AbhijeetDey[8y_0m].doc')
 # print("\n\n ========== parsed_data ========= \n\n")
->>>>>>> 53330e62fa587e7a3ee93ae3b26bc10405c2e4fc
 
 

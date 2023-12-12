@@ -20,7 +20,7 @@ const App = () => {
             const formData = new FormData();
             formData.append('resume', resumeFile);
 
-            const response = await fetch('http://13.127.233.49:5000/resumeparse', {
+            const response = await fetch('http://35.154.206.253:5000/resumeparse', {
                 method: 'POST',
                 body: formData,
                 mode: 'cors',
@@ -32,10 +32,6 @@ const App = () => {
                 
                 setParsedData(parsedData);
                 console.log('Parsed Resume Data:', parsedData);
-<<<<<<< HEAD
-                if (parsedData.name) {
-                    //textToSpeech(Hello ${parsedData.name}, AI fill all the details my name is saiprasad swain from odisha now i am working on truetalent internship my degree is bsc and now i am a frontend,and backend both fullstack developer with skills reactjs,php,nodejs,expressjs,mongodb,larabel and sql,python my father name is akshayaswain,he is from odisha now he is a teacher of truetalent.);
-=======
                 if (parsedData.first_name) {
 
                     textToSpeech(`Hello ${parsedData.first_name}, Welcome to truetalent indias no1 hairing platform thanks for your interest with our platform. Here are some details from your resume: Email: ${parsedData.email}, Phone: ${parsedData.phone}, Skills: ${parsedData.skills}, Profile Summary: ${parsedData.objective}. AI has filled in all your resume details.`);
@@ -43,7 +39,6 @@ const App = () => {
                     // textToSpeech(`Hello ${parsedData.first_name}, Welcome to truetalent indias no1 job search platform thanks for your interest with our platform. Here are some details from your resume: Email: ${parsedData.email}, Phone: ${parsedData.phone}, Skills: ${parsedData.skills}, Profile Summary: ${parsedData.objective}. AI has filled in all your resume details.`);
 
         
->>>>>>> 53330e62fa587e7a3ee93ae3b26bc10405c2e4fc
                 }
             } else {
                 setError('Failed to parse resume');
@@ -87,28 +82,18 @@ const App = () => {
                         <textarea id='uni' value={parsedData.objective} readOnly />
                     </div>
                     <div>
-<<<<<<< HEAD
-                        <label>First name:</label>
-                        <textarea id='name' value={parsedData.first_name} readOnly />
-                    </div>
-                    <div>
-                        <label>last name:</label>
-                        <textarea id='name' value={parsedData.last_name} readOnly />
-=======
-                        <label>Skills:</label>
-                        <textarea id='ski' value={parsedData.skills} readOnly />
->>>>>>> 53330e62fa587e7a3ee93ae3b26bc10405c2e4fc
-                    </div>
-                    <div>
-                        <label>Objective:</label>
-                        <textarea id='des' value={parsedData.objective} readOnly />
-                    </div>
-                    <div>
-<<<<<<< HEAD
                         <label>Skills:</label>
                         <textarea id='ski' value={parsedData.skills} readOnly />
                     </div>
-=======
+                    {/* <div>
+                        <label>Total Experience:</label>
+                        <textarea id='exp' value={parsedData.total_exp} readOnly />
+                    </div>
+                    <div>
+                        <label>Location:</label>
+                        <textarea id='pro' value={parsedData.location} readOnly />
+                    </div>
+                    <div>
                         <label>Address:</label>
                         <textarea id='pro' value={parsedData.address_components} readOnly />
                     </div>
@@ -135,7 +120,6 @@ const App = () => {
                         <textarea id='pro' value={parsedData.Projects} readOnly />
                     </div> */}
                     
->>>>>>> 53330e62fa587e7a3ee93ae3b26bc10405c2e4fc
                 </div>
             )}
 
@@ -144,4 +128,5 @@ const App = () => {
     );
 };
 
-export default App;
+export default App;
+
