@@ -20,7 +20,7 @@ const App = () => {
             const formData = new FormData();
             formData.append('resume', resumeFile);
 
-            const response = await fetch('http://3.24.157.140:5000/resumeparse', {
+            const response = await fetch('http:// 43.204.42.97:5000/resumeparse', {
                 method: 'POST',
                 body: formData,
                 mode: 'cors',
