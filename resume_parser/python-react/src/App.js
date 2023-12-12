@@ -20,7 +20,7 @@ const App = () => {
             const formData = new FormData();
             formData.append('resume', resumeFile);
 
-            const response = await fetch(' http://127.0.0.1:5000/resumeparse', {
+            const response = await fetch('http://35.154.206.253:5000/resumeparse', {
                 method: 'POST',
                 body: formData,
                 mode: 'cors',
@@ -60,14 +60,14 @@ const App = () => {
             {parsedData && (
                 <div>
                     <h2>Contact Information:</h2>
-                   
+                    
                     <div>
                         <label>First name:</label>
-                        <textarea id='name' value={parsedData.first_name} readOnly />
+                        <textarea id='nam' value={parsedData.first_name} readOnly />
                     </div>
                     <div>
                         <label>last name:</label>
-                        <textarea id='name' value={parsedData.last_name} readOnly />
+                        <textarea id='nme' value={parsedData.last_name} readOnly />
                     </div>
                     <div>
                         <label>Email:</label>
